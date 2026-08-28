@@ -1,0 +1,13 @@
+{
+  "name": "modak-skills",
+  "owner": {
+    "name": "modakbul-gongbang"
+  },
+  "plugins": [
+    {
+      "name": "modak-skills",
+      "source": "./",
+      "description": "모닥불 공방에서 쓰는 Agent Skill 모음"
+    }
+  ]
+}

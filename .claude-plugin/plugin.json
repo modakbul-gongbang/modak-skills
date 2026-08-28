@@ -1,0 +1,14 @@
+{
+  "name": "modak-skills",
+  "description": "모닥불 공방에서 쓰는 Agent Skill 모음",
+  "version": "0.1.0",
+  "author": {
+    "name": "modakbul-gongbang"
+  },
+  "homepage": "https://github.com/modakbul-gongbang/modak-skills",
+  "repository": "https://github.com/modakbul-gongbang/modak-skills",
+  "license": "MIT",
+  "skills": [
+    "./eli"
+  ]
+}
