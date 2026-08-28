@@ -39,7 +39,7 @@
 같은 주제를 다루지만 비유, 용어, 다루는 깊이가 탭마다 달라진다.
 
 <details open>
-<summary><b>5살</b> — 사진 줄을 옮겨 다는 것</summary>
+<summary><b>5살</b> : 사진 줄을 옮겨 다는 것</summary>
 
 카드 5장이고 용어가 하나도 없다. 커밋은 줄에 걸린 사진, 브랜치는 갈라진 줄로 그린다.
 
@@ -48,7 +48,7 @@
 </details>
 
 <details>
-<summary><b>입문</b> — 내 커밋을 main 끝에서 다시 만드는 것</summary>
+<summary><b>입문</b> : 내 커밋을 main 끝에서 다시 만드는 것</summary>
 
 카드마다 용어를 하나씩 `한글(English) : 뜻` 형식으로 정의한다. 커밋, 브랜치, 머지 커밋 순서로 쌓아 올린다.
 
@@ -57,7 +57,7 @@
 </details>
 
 <details>
-<summary><b>실무</b> — 동작, 트레이드오프, 실패 지점, 복구</summary>
+<summary><b>실무</b> : 동작, 트레이드오프, 실패 지점, 복구</summary>
 
 단계별로 넘겨 보는 위젯, interactive rebase 시뮬레이터, merge와 rebase 비교표, 충돌 처리와 복구 명령이 들어간다.
 용어표는 그림 뒤에 놓인다.
