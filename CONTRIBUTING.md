@@ -6,9 +6,9 @@
 2. 폴더 안에 세 파일을 만든다.
    - `SKILL.md` : 에이전트가 읽는 지침이다. frontmatter에 `name`, `description`이 반드시 있어야 한다.
    - `skill.json` : 스킬 메타데이터이다. `SKILL.md`의 `name`, `description`과 값을 일치시킨다.
-   - `instruction.md` : 사람이 읽는 사용 문서이다. 하는 일, 언제 쓰는지, 사용법, 결과물을 적는다.
+   - `README.md` : 사람이 읽는 사용 문서이다. GitHub에서 스킬 폴더를 열면 이 파일이 바로 보인다. 하는 일, 언제 쓰는지, 사용법, 결과물을 적는다.
 3. `.claude-plugin/plugin.json`의 `skills` 배열에 `"./<스킬 이름>"`을 추가한다.
-4. `README.md`의 스킬 목록 표에 한 줄을 추가한다.
+4. 루트 `README.md`의 스킬 목록 표에 한 줄을 추가한다.
 
 스크립트나 참고 자료가 필요하면 스킬 폴더 안에 `scripts/`, `references/`, `templates/`를 만들어 넣는다.
 
@@ -35,4 +35,4 @@ metadata:
 
 - 다른 스킬과 발동 조건이 겹치지 않는지 확인한다.
 - 크리덴셜을 하드코딩하지 않는다. 비밀 값은 환경변수로 읽는다.
-- 외부 API를 호출한다면 그 사실과 필요한 키를 `instruction.md`에 명시한다.
+- 외부 API를 호출한다면 그 사실과 필요한 키를 스킬 폴더의 `README.md`에 명시한다.
