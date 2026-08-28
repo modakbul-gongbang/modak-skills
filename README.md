@@ -25,6 +25,13 @@ cp -r modak-skills/eli ~/.claude/skills/
 | --- | --- | --- | --- |
 | `eli` | 주제를 5살, 입문, 실무 세 수준으로 나눠 그림 위주의 HTML 설명 자료를 만든다 | `/eli [5\|입문\|실무] <주제>` | [사용 가이드](eli/instruction.md) |
 
+### eli 결과물 예시
+
+`/eli git rebase`를 실행하면 5살, 입문, 실무 세 수준이 탭으로 묶인 페이지가 만들어진다.
+아래는 그중 5살 탭이다. 입문과 실무 탭은 [사용 가이드](eli/instruction.md#예시-결과물)에서 볼 수 있다.
+
+<img src="docs/assets/eli-5.png" alt="eli 5살 탭" width="520">
+
 ## 폴더 구조
 
 ```
