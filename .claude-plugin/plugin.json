@@ -9,6 +9,6 @@
   "repository": "https://github.com/modakbul-gongbang/modak-skills",
   "license": "MIT",
   "skills": [
-    "./eli"
+    "./skills/eli"
   ]
 }

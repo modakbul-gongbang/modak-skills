@@ -43,7 +43,7 @@
 
 카드 5장이고 용어가 하나도 없다. 커밋은 줄에 걸린 사진, 브랜치는 갈라진 줄로 그린다.
 
-![eli 5살 탭](../docs/assets/eli-5.png)
+![eli 5살 탭](../../docs/assets/eli-5.png)
 
 </details>
 
@@ -52,7 +52,7 @@
 
 카드마다 용어를 하나씩 `한글(English) : 뜻` 형식으로 정의한다. 커밋, 브랜치, 머지 커밋 순서로 쌓아 올린다.
 
-![eli 입문 탭](../docs/assets/eli-20.png)
+![eli 입문 탭](../../docs/assets/eli-20.png)
 
 </details>
 
@@ -62,7 +62,7 @@
 단계별로 넘겨 보는 위젯, interactive rebase 시뮬레이터, merge와 rebase 비교표, 충돌 처리와 복구 명령이 들어간다.
 용어표는 그림 뒤에 놓인다.
 
-![eli 실무 탭](../docs/assets/eli-30.png)
+![eli 실무 탭](../../docs/assets/eli-30.png)
 
 </details>
 
