@@ -101,15 +101,57 @@ python3 scripts/eli_build.py <sections.html> --title "<주제 명사구>" --out 
 Artifact 도구로 발행한다. 제목은 주제를 명사구로 적는다.
 파비콘은 5살이 🖍️, 입문이 📘, 실무가 🧭, 탭 페이지가 🎚️이다.
 
-## 필요한 것
+## 설치
 
-Claude Code의 Artifact 도구를 사용한다. 별도의 API 키는 없다.
+이 스킬은 `SKILL.md` 외에 `scripts/eli_build.py`와 `templates/template.html`이 필요하다.
+어떤 방법으로 설치하든 세 파일이 같은 폴더 구조로 있어야 한다.
 
-검증 단계는 Python 3.11 이상과 아래 패키지가 필요하다.
+### Claude Code
+
+플러그인으로 설치하면 마켓플레이스 갱신만으로 업데이트된다.
+
+```
+/plugin marketplace add modakbul-gongbang/modak-skills
+/plugin install modak-skills@modak-skills
+```
+
+`npx skills`를 쓰면 다른 런타임과 함께 설치된다.
 
 ```bash
-uv pip install playwright pillow
-uv run playwright install chromium
+npx --yes skills add modakbul-gongbang/modak-skills --skill eli -g
+```
+
+clone한 저장소를 심볼릭 링크로 연결해도 된다. `git pull`이 바로 반영된다.
+
+```bash
+ln -s ~/projects/modak-skills/skills/eli ~/.claude/skills/eli
+```
+
+SKILL.md의 스크립트 경로는 `${CLAUDE_SKILL_DIR}`로 적혀 있어서 세 방법 모두에서 동작한다.
+
+### Codex
+
+Codex는 심볼릭 링크를 인식하지 못할 수 있으므로 폴더를 통째로 복사한다.
+업데이트할 때는 `git pull` 뒤에 같은 명령을 다시 실행한다.
+
+```bash
+mkdir -p ~/.codex/skills
+cp -r ~/projects/modak-skills/skills/eli ~/.codex/skills/eli
+```
+
+Codex는 `${CLAUDE_SKILL_DIR}`를 치환하지 않는다. SKILL.md에 이 변수가 SKILL.md가 있는 폴더라고 적어 두었으므로
+에이전트가 `~/.codex/skills/eli/scripts/eli_build.py`로 읽는다.
+Codex에는 Artifact 도구가 없어서 발행 단계는 건너뛰고, 조립된 HTML 파일 경로를 알려 준다. 브라우저로 열면 된다.
+
+## 필요한 것
+
+Claude Code에서는 Artifact 도구로 발행한다. 별도의 API 키는 없다.
+
+검증 단계는 Python 3.11 이상과 아래 패키지가 필요하다. 스크립트를 실행하는 `python3`에 설치한다.
+
+```bash
+python3 -m pip install playwright pillow
+python3 -m playwright install chromium
 ```
 
 패키지가 없으면 `--no-verify`로 조립만 할 수 있다. 이때는 스크린샷 검토와 DOM 검사를 건너뛴다.
