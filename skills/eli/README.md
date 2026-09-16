@@ -78,11 +78,80 @@
 
 도구를 다룰 때는 정의로 시작하지 않는다. "이게 없으면 이렇게 됨"으로 열고 실제 로그나 에러 화면을 보여준다.
 
+## 작동 방식
+
+에이전트는 내용만 쓰고, 조립과 검증은 스크립트가 맡는다. 도구 호출 4번으로 끝난다.
+
+1. 에이전트가 탭별 `<section>` 내용만 HTML 파일 하나에 쓴다. CSS와 탭, 단계 위젯 JS는 쓰지 않는다.
+2. `scripts/eli_build.py`가 `templates/template.html`에 내용을 끼워 페이지를 만든다.
+   이어서 headless Chromium으로 탭마다 스크린샷을 찍고 DOM을 검사한다.
+   SVG 글자 수 초과, `text-anchor` 누락, 가장자리 여백 부족, 카드 밖 넘침, 금지 문구, 콘솔 오류를 경고로 출력한다.
+3. 에이전트가 스크린샷과 경고를 보고 내용 파일을 고친 뒤, 고친 탭만 `--tabs`로 다시 빌드한다.
+4. 경고가 0건이면 Artifact 도구로 발행한다.
+
+디자인 시스템(팔레트, 글꼴, 탭, 카드, 타일, 막대, 단계 위젯, 시뮬레이터, 용어표, 코드 블록)은 템플릿에 들어 있다.
+에이전트가 매번 CSS를 새로 쓰지 않기 때문에 페이지 생성 시간이 줄고 결과물 모양이 일정하다.
+
+```
+python3 scripts/eli_build.py <sections.html> --title "<주제 명사구>" --out <page.html> [--tabs 5살,실무] [--no-verify]
+```
+
 ## 결과물
 
 Artifact 도구로 발행한다. 제목은 주제를 명사구로 적는다.
 파비콘은 5살이 🖍️, 입문이 📘, 실무가 🧭, 탭 페이지가 🎚️이다.
 
+## 설치
+
+이 스킬은 `SKILL.md` 외에 `scripts/eli_build.py`와 `templates/template.html`이 필요하다.
+어떤 방법으로 설치하든 세 파일이 같은 폴더 구조로 있어야 한다.
+
+### Claude Code
+
+플러그인으로 설치하면 마켓플레이스 갱신만으로 업데이트된다.
+
+```
+/plugin marketplace add modakbul-gongbang/modak-skills
+/plugin install modak-skills@modak-skills
+```
+
+`npx skills`를 쓰면 다른 런타임과 함께 설치된다.
+
+```bash
+npx --yes skills add modakbul-gongbang/modak-skills --skill eli -g
+```
+
+clone한 저장소를 심볼릭 링크로 연결해도 된다. `git pull`이 바로 반영된다.
+
+```bash
+ln -s ~/projects/modak-skills/skills/eli ~/.claude/skills/eli
+```
+
+SKILL.md의 스크립트 경로는 `${CLAUDE_SKILL_DIR}`로 적혀 있어서 세 방법 모두에서 동작한다.
+
+### Codex
+
+Codex는 심볼릭 링크를 인식하지 못할 수 있으므로 폴더를 통째로 복사한다.
+업데이트할 때는 `git pull` 뒤에 같은 명령을 다시 실행한다.
+
+```bash
+mkdir -p ~/.codex/skills
+cp -r ~/projects/modak-skills/skills/eli ~/.codex/skills/eli
+```
+
+Codex는 `${CLAUDE_SKILL_DIR}`를 치환하지 않는다. SKILL.md에 이 변수가 SKILL.md가 있는 폴더라고 적어 두었으므로
+에이전트가 `~/.codex/skills/eli/scripts/eli_build.py`로 읽는다.
+Codex에는 Artifact 도구가 없어서 발행 단계는 건너뛰고, 조립된 HTML 파일 경로를 알려 준다. 브라우저로 열면 된다.
+
 ## 필요한 것
 
-Claude Code의 Artifact 도구와 `artifact-design` 스킬을 사용한다. 별도의 API 키나 외부 의존성은 없다.
+Claude Code에서는 Artifact 도구로 발행한다. 별도의 API 키는 없다.
+
+검증 단계는 Python 3.11 이상과 아래 패키지가 필요하다. 스크립트를 실행하는 `python3`에 설치한다.
+
+```bash
+python3 -m pip install playwright pillow
+python3 -m playwright install chromium
+```
+
+패키지가 없으면 `--no-verify`로 조립만 할 수 있다. 이때는 스크린샷 검토와 DOM 검사를 건너뛴다.

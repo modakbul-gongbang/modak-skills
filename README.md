@@ -18,7 +18,7 @@ Claude Code, Codex, Cursor, Gemini CLI 등 SKILL.md를 읽는 에이전트에서
 
 ## 설치 방법
 
-각 스킬은 `skills/<이름>/SKILL.md` 한 파일로 구성된다.
+각 스킬은 `skills/<이름>/SKILL.md`를 중심으로 구성되고, 필요하면 같은 폴더에 `scripts/`와 `templates/`가 붙는다.
 이 레이아웃은 [vercel-labs/skills](https://github.com/vercel-labs/skills)가 기대하는 구조와 같아서 아래 세 가지 방법 중 편한 쪽을 쓰면 된다.
 
 ### 방법 A : `npx skills` (권장)
@@ -64,11 +64,12 @@ for d in ~/projects/modak-skills/skills/*/; do
 done
 ```
 
-Codex는 심볼릭 링크로 연결된 SKILL.md를 인식하지 못할 수 있으므로 실제 파일로 복사한다.
+Codex는 심볼릭 링크로 연결된 SKILL.md를 인식하지 못할 수 있으므로 스킬 폴더를 통째로 복사한다.
+`scripts/`와 `templates/`가 있는 스킬은 SKILL.md만 복사하면 동작하지 않는다.
 
 ```bash
-mkdir -p ~/.codex/skills/eli
-cp ~/projects/modak-skills/skills/eli/SKILL.md ~/.codex/skills/eli/SKILL.md
+mkdir -p ~/.codex/skills
+cp -r ~/projects/modak-skills/skills/eli ~/.codex/skills/eli
 ```
 
 업데이트는 `git pull`로 한다. Claude Code는 심볼릭 링크라 바로 반영되고, Codex는 파일을 다시 복사해야 한다.
@@ -84,7 +85,9 @@ modak-skills/
 └── skills/
     └── <스킬 이름>/
         ├── SKILL.md       # 에이전트가 읽는 지침
-        └── README.md      # 사람이 읽는 사용 문서 (선택)
+        ├── README.md      # 사람이 읽는 사용 문서 (선택)
+        ├── scripts/       # SKILL.md가 실행하는 스크립트 (선택)
+        └── templates/     # 스크립트가 쓰는 템플릿 (선택)
 ```
 
 ## 스킬 추가하기
