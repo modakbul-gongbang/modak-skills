@@ -78,6 +78,24 @@
 
 도구를 다룰 때는 정의로 시작하지 않는다. "이게 없으면 이렇게 됨"으로 열고 실제 로그나 에러 화면을 보여준다.
 
+## 작동 방식
+
+에이전트는 내용만 쓰고, 조립과 검증은 스크립트가 맡는다. 도구 호출 4번으로 끝난다.
+
+1. 에이전트가 탭별 `<section>` 내용만 HTML 파일 하나에 쓴다. CSS와 탭, 단계 위젯 JS는 쓰지 않는다.
+2. `scripts/eli_build.py`가 `templates/template.html`에 내용을 끼워 페이지를 만든다.
+   이어서 headless Chromium으로 탭마다 스크린샷을 찍고 DOM을 검사한다.
+   SVG 글자 수 초과, `text-anchor` 누락, 가장자리 여백 부족, 카드 밖 넘침, 금지 문구, 콘솔 오류를 경고로 출력한다.
+3. 에이전트가 스크린샷과 경고를 보고 내용 파일을 고친 뒤, 고친 탭만 `--tabs`로 다시 빌드한다.
+4. 경고가 0건이면 Artifact 도구로 발행한다.
+
+디자인 시스템(팔레트, 글꼴, 탭, 카드, 타일, 막대, 단계 위젯, 시뮬레이터, 용어표, 코드 블록)은 템플릿에 들어 있다.
+에이전트가 매번 CSS를 새로 쓰지 않기 때문에 페이지 생성 시간이 줄고 결과물 모양이 일정하다.
+
+```
+python3 scripts/eli_build.py <sections.html> --title "<주제 명사구>" --out <page.html> [--tabs 5살,실무] [--no-verify]
+```
+
 ## 결과물
 
 Artifact 도구로 발행한다. 제목은 주제를 명사구로 적는다.
@@ -85,4 +103,13 @@ Artifact 도구로 발행한다. 제목은 주제를 명사구로 적는다.
 
 ## 필요한 것
 
-Claude Code의 Artifact 도구와 `artifact-design` 스킬을 사용한다. 별도의 API 키나 외부 의존성은 없다.
+Claude Code의 Artifact 도구를 사용한다. 별도의 API 키는 없다.
+
+검증 단계는 Python 3.11 이상과 아래 패키지가 필요하다.
+
+```bash
+uv pip install playwright pillow
+uv run playwright install chromium
+```
+
+패키지가 없으면 `--no-verify`로 조립만 할 수 있다. 이때는 스크린샷 검토와 DOM 검사를 건너뛴다.

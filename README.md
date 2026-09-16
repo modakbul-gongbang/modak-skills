@@ -18,7 +18,7 @@ Claude Code, Codex, Cursor, Gemini CLI 등 SKILL.md를 읽는 에이전트에서
 
 ## 설치 방법
 
-각 스킬은 `skills/<이름>/SKILL.md` 한 파일로 구성된다.
+각 스킬은 `skills/<이름>/SKILL.md`를 중심으로 구성되고, 필요하면 같은 폴더에 `scripts/`와 `templates/`가 붙는다.
 이 레이아웃은 [vercel-labs/skills](https://github.com/vercel-labs/skills)가 기대하는 구조와 같아서 아래 세 가지 방법 중 편한 쪽을 쓰면 된다.
 
 ### 방법 A : `npx skills` (권장)
